@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Methods Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a1628;
+  --indigo: #1e3a5f;
+  --blue: #1565c0;
+  --blue-light: #42a5f5;
+  --cyan: #26c6da;
+  --emerald: #10b981;
+  --red: #ef4444;
+  --orange: #f59e0b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: 80px;
+}
+.bg-orbs { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.orb { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.12; animation: drift 12s ease-in-out infinite alternate; }
+.orb1 { width: 500px; height: 500px; background: #1565c0; top: -100px; left: -100px; }
+.orb2 { width: 400px; height: 400px; background: #0d47a1; top: 40%; right: -80px; animation-delay: 3s; }
+.orb3 { width: 300px; height: 300px; background: #26c6da; bottom: 10%; left: 20%; animation-delay: 6s; }
+@keyframes drift { from{transform:translate(0,0) scale(1)} to{transform:translate(30px,40px) scale(1.08)} }
+
+.sticky {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  background: rgba(10,22,40,0.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(21,101,192,0.3); padding: 10px 20px;
+}
+.sticky-inner { max-width: 820px; margin: 0 auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pill { padding: 5px 14px; border-radius: 20px; font-size: .8em; font-weight: 600; white-space: nowrap; }
+.pill-q { background: rgba(255,255,255,.1); color: #e2e8f0; border: 1px solid rgba(255,255,255,.2); }
+.pill-c { background: rgba(16,185,129,.2); color: #6ee7b7; border: 1px solid #10b981; }
+.pill-w { background: rgba(239,68,68,.2); color: #fca5a5; border: 1px solid #ef4444; }
+.pill-p { background: rgba(66,165,245,.2); color: #90caf9; border: 1px solid #42a5f5; }
+.prog-wrap { flex:1; background: rgba(255,255,255,.1); border-radius: 8px; height: 6px; min-width: 60px; overflow: hidden; }
+.prog-fill { background: linear-gradient(90deg, var(--blue), var(--cyan)); height: 100%; border-radius: 8px; transition: width .5s; }
+
+.page-tabs {
+  display: flex; gap: 8px; max-width: 820px; margin: 0 auto; padding: 10px 20px 0;
+}
+.tab-btn {
+  padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: .83em; font-weight: 600;
+  transition: all .2s; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.15); color: #94a3b8;
+  font-family: 'DM Sans', sans-serif;
+}
+.tab-btn:hover { border-color: var(--blue-light); color: var(--blue-light); background: rgba(66,165,245,.08); }
+.tab-btn.active {
+  background: linear-gradient(135deg,rgba(21,101,192,.5),rgba(66,165,245,.2));
+  border-color: var(--blue-light); color: var(--blue-light); box-shadow: 0 0 14px rgba(66,165,245,.2);
+}
+
+#startScreen { position: relative; z-index: 1; max-width: 680px; margin: 80px auto 0; padding: 20px; }
+.start-card {
+  background: rgba(255,255,255,0.05); backdrop-filter: blur(20px);
+  border: 1px solid rgba(21,101,192,0.4); border-radius: 24px; padding: 44px 40px;
+  box-shadow: 0 40px 80px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.atom-icon { font-size: 3.5em; display: block; text-align: center; margin-bottom: 14px; animation: pulse-icon 3s ease-in-out infinite; }
+@keyframes pulse-icon {
+  0%,100%{transform:scale(1);filter:drop-shadow(0 0 15px rgba(66,165,245,.4))}
+  50%{transform:scale(1.06);filter:drop-shadow(0 0 30px rgba(66,165,245,.8))}
+}
+.start-card h1 { font-family: 'Playfair Display', serif; font-size: 2.2em; font-weight: 900; color: #fff; text-align: center; margin-bottom: 6px; }
+.subtitle { text-align: center; color: var(--blue-light); font-size: .95em; margin-bottom: 28px; opacity: .85; }
+.section-label { color: #94a3b8; font-size: .8em; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px; }
+.filter-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.filter-btn {
+  padding: 7px 16px; border-radius: 20px; cursor: pointer; font-size: .85em; font-weight: 500;
+  transition: all .2s; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.15); color: #94a3b8;
+  font-family: 'DM Sans', sans-serif;
+}
+.filter-btn:hover { border-color: var(--blue-light); color: var(--blue-light); background: rgba(66,165,245,.08); }
+.filter-btn.active {
+  background: linear-gradient(135deg,rgba(21,101,192,.5),rgba(66,165,245,.2));
+  border-color: var(--blue-light); color: var(--blue-light); box-shadow: 0 0 14px rgba(66,165,245,.2);
+}
+.start-info { color: #64748b; font-size: .9em; text-align: center; margin-bottom: 22px; }
+.start-info span { color: var(--blue-light); font-weight: 700; }
+.btn-start {
+  width: 100%; padding: 16px; border: none; border-radius: 14px;
+  background: linear-gradient(135deg, var(--blue), #0d47a1);
+  color: #fff; font-size: 1.1em; font-weight: 700; font-family: 'DM Sans', sans-serif;
+  cursor: pointer; transition: all .25s; box-shadow: 0 8px 30px rgba(21,101,192,.5);
+}
+.btn-start:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(21,101,192,.6); }
+.by-line { text-align: center; margin-top: 20px; padding-top: 18px; border-top: 1px solid rgba(21,101,192,0.25); }
+.by-line .designed-text { color: #4a6080; font-size: .75em; letter-spacing: 2px; font-weight: 500; text-transform: uppercase; display: block; margin-bottom: 4px; }
+.by-line .name-text { color: var(--blue-light); font-size: 1em; font-weight: 700; letter-spacing: 3px; font-family: 'Playfair Display', serif; display: block; }
+
+#quizWrapper { display: none; padding-top: 75px; position: relative; z-index: 1; }
+.q-card {
+  max-width: 820px; margin: 18px auto; padding: 28px 32px;
+  background: rgba(255,255,255,0.97); border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0,0,0,.3);
+  border-left: 5px solid rgba(21,101,192,0.3);
+  transition: border-color .35s; animation: slideIn .35s ease both;
+}
+@keyframes slideIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.q-card.answered-correct { border-left-color: var(--emerald); }
+.q-card.answered-wrong   { border-left-color: var(--red); }
+.q-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.q-num {
+  background: linear-gradient(135deg, var(--blue), #0d47a1);
+  color: #fff; min-width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: .85em; flex-shrink: 0;
+}
+.cat-tag { padding: 3px 12px; border-radius: 20px; font-size: .72em; font-weight: 600; color: #fff; }
+.cat-tag.mcq { background: linear-gradient(135deg,#1565c0,#0d47a1); }
+.cat-tag.tf  { background: linear-gradient(135deg,#00897b,#00695c); }
+.page-tag { padding: 3px 10px; border-radius: 12px; font-size: .7em; font-weight: 700; background: rgba(66,165,245,.15); color: #42a5f5; border: 1px solid rgba(66,165,245,.3); }
+.q-text { font-size: 1.06em; font-weight: 600; color: #0f172a; line-height: 1.6; margin-bottom: 18px; }
+.opts { display: flex; flex-direction: column; gap: 9px; }
+.opt {
+  padding: 12px 18px; border: 2px solid #e2e8f0; border-radius: 12px;
+  cursor: pointer; font-size: .96em; text-align: left;
+  background: #fff; color: #334155; transition: all .18s;
+  font-family: 'DM Sans', sans-serif; display: flex; align-items: center; gap: 10px; width: 100%;
+}
+.opt-letter {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #f1f5f9; border: 2px solid #cbd5e1;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8em; font-weight: 700; color: #64748b; flex-shrink: 0; transition: all .18s;
+}
+.opt:hover:not(:disabled) { border-color: var(--blue); background: #eff6ff; transform: translateX(5px); }
+.opt:hover:not(:disabled) .opt-letter { background: var(--blue); border-color: var(--blue); color: #fff; }
+.opt.correct { border-color: var(--emerald); background: #f0fdf4; color: #065f46; font-weight: 600; }
+.opt.correct .opt-letter { background: var(--emerald); border-color: var(--emerald); color: #fff; }
+.opt.wrong   { border-color: var(--red); background: #fef2f2; color: #7f1d1d; }
+.opt.wrong .opt-letter { background: var(--red); border-color: var(--red); color: #fff; }
+.opt:disabled { cursor: default; }
+.q-feedback { margin-top: 14px; padding: 12px 16px; border-radius: 12px; font-size: .9em; line-height: 1.8; display: none; font-family: 'DM Sans', sans-serif; }
+.q-feedback.correct { background: #f0fdf4; border-left: 4px solid var(--emerald); color: #065f46; }
+.q-feedback.wrong   { background: #fef2f2; border-left: 4px solid var(--red); color: #7f1d1d; }
+
+.submit-wrap { max-width: 820px; margin: 24px auto; text-align: center; padding: 0 20px; }
+.btn-submit {
+  padding: 16px 70px; border: none; border-radius: 14px;
+  background: linear-gradient(135deg,var(--blue),#0d47a1);
+  color: #fff; font-size: 1.1em; font-weight: 700; font-family: 'DM Sans', sans-serif;
+  cursor: pointer; transition: all .2s; box-shadow: 0 8px 30px rgba(21,101,192,.5);
+}
+.btn-submit:hover { transform: translateY(-3px); }
+.btn-submit:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+#resultsBox {
+  max-width: 820px; margin: 24px auto; padding: 40px;
+  background: rgba(255,255,255,.97); border-radius: 24px;
+  text-align: center; display: none;
+  box-shadow: 0 30px 80px rgba(0,0,0,.4); animation: slideIn .4s ease;
+}
+#resultsBox h2 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 2em; margin-bottom: 8px; }
+.score-ring { width: 160px; height: 160px; margin: 20px auto; position: relative; }
+.score-ring svg { transform: rotate(-90deg); }
+.ring-bg { fill: none; stroke: #e2e8f0; stroke-width: 12; }
+.ring-fg { fill: none; stroke: url(#ringGrad); stroke-width: 12; stroke-linecap: round; transition: stroke-dashoffset 1s cubic-bezier(.4,0,.2,1); }
+.score-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.score-center .big   { font-size: 2.4em; font-weight: 900; color: var(--navy); font-family: 'Playfair Display', serif; }
+.score-center .small { font-size: .8em; color: #64748b; }
+.result-msg { font-size: 1.05em; color: #475569; margin: 10px 0 24px; }
+.stats-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 24px; }
+.stat-card { border-radius: 16px; padding: 16px 10px; }
+.stat-card.c { background: #f0fdf4; border: 2px solid #10b981; }
+.stat-card.w { background: #fef2f2; border: 2px solid #ef4444; }
+.stat-card.p { background: #eff6ff; border: 2px solid #42a5f5; }
+.stat-card .num { font-size: 2em; font-weight: 900; font-family: 'Playfair Display', serif; }
+.stat-card.c .num { color: #10b981; }
+.stat-card.w .num { color: #ef4444; }
+.stat-card.p .num { color: #1565c0; }
+.stat-card .lbl { font-size: .8em; color: #64748b; margin-top: 4px; }
+.btn-re, .btn-home {
+  width: 100%; padding: 14px; border: none; border-radius: 14px;
+  font-size: 1.05em; font-weight: 700; font-family: 'DM Sans', sans-serif;
+  cursor: pointer; margin-bottom: 10px; transition: all .2s;
+}
+.btn-re   { background: linear-gradient(135deg,var(--blue),#0d47a1); color: #fff; }
+.btn-home { background: #f1f5f9; color: #475569; }
+.btn-re:hover   { transform: translateY(-2px); }
+.btn-home:hover { background: #e2e8f0; }
+.review-section { text-align: left; margin-top: 24px; }
+.review-section h3 { color: var(--navy); font-size: 1.1em; margin-bottom: 14px; font-family: 'Playfair Display', serif; }
+.rev-item { padding: 14px 16px; border-radius: 12px; margin-bottom: 10px; font-size: .88em; line-height: 1.6; }
+.rev-item.wrong { background: #fef2f2; border-left: 4px solid var(--red); }
+.rev-item .rt   { font-weight: 700; margin-bottom: 5px; color: #1e293b; }
+.rev-item .exp  { color: #64748b; font-size: .9em; margin-top: 5px; }
+
+@media(max-width:600px){
+  .start-card{padding:28px 22px}
+  .start-card h1{font-size:1.7em}
+  .q-card{padding:20px 18px;margin:14px 12px}
+  #resultsBox{padding:28px 20px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<div class="sticky" id="stickyBar" style="display:none">
+  <div class="sticky-inner">
+    <div class="pill pill-q" id="sNum">0/0</div>
+    <div class="pill pill-c" id="sC">✅ 0</div>
+    <div class="pill pill-w" id="sW">❌ 0</div>
+    <div class="pill pill-p" id="sP">📊 0%</div>
+    <div class="prog-wrap"><div class="prog-fill" id="sFill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<div id="startScreen">
+  <div class="start-card">
+    <span class="atom-icon">🔬</span>
+    <h1>Research Methods Quiz</h1>
+    <p class="subtitle">MCQ · True/False — Research Methods Revision</p>
+    <div class="by-line" style="margin-top:0;margin-bottom:22px;padding-top:0;border-top:none;">
+      <span class="designed-text">Designed &amp; Developed by</span>
+      <span class="name-text">𝑴𝑶𝑺𝑻𝑨𝑭𝑨 𝑺𝑨𝑳𝑳𝑨𝑴</span>
+    </div>
+    <p class="section-label">Choose Section</p>
+    <div class="filter-group" id="filterGroup">
+      <button class="filter-btn active" onclick="selectCat('all',this)">📚 الكل</button>
+      <button class="filter-btn" onclick="selectCat('mcq',this)">📝 MCQ فقط</button>
+      <button class="filter-btn" onclick="selectCat('tf',this)">✅ True/False فقط</button>
+    </div>
+    <p class="start-info">عدد الأسئلة: <span id="qCount">0</span></p>
+    <button class="btn-start" onclick="startQuiz()">ابدأ الكويز ▶</button>
+    <div class="by-line">
+      <span class="designed-text">Designed &amp; Developed by</span>
+      <span class="name-text">𝑴𝑶𝑺𝑻𝑨𝑭𝑨 𝑺𝑨𝑳𝑳𝑨𝑴</span>
+    </div>
+  </div>
+</div>
+
+<div id="quizWrapper">
+  <div id="cardsContainer"></div>
+  <div class="submit-wrap">
+    <button class="btn-submit" id="submitBtn" onclick="showResults()" disabled>Show Results 🎯</button>
+  </div>
+  <div id="resultsBox">
+    <h2>🎉 Quiz Complete!</h2>
+    <div class="score-ring">
+      <svg width="160" height="160" viewBox="0 0 160 160">
+        <defs>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#1565c0"/>
+            <stop offset="100%" stop-color="#42a5f5"/>
+          </linearGradient>
+        </defs>
+        <circle class="ring-bg" cx="80" cy="80" r="64"/>
+        <circle class="ring-fg" id="ringFg" cx="80" cy="80" r="64" stroke-dasharray="402" stroke-dashoffset="402"/>
+      </svg>
+      <div class="score-center">
+        <span class="big" id="rScore">0</span>
+        <span class="small">out of <span id="rTotal">0</span></span>
+      </div>
+    </div>
+    <div class="result-msg" id="rMsg"></div>
+    <div class="stats-grid">
+      <div class="stat-card c"><div class="num" id="rC">0</div><div class="lbl">✅ Correct</div></div>
+      <div class="stat-card w"><div class="num" id="rW">0</div><div class="lbl">❌ Wrong</div></div>
+      <div class="stat-card p"><div class="num" id="rP">0%</div><div class="lbl">📊 Score</div></div>
+    </div>
+    <button class="btn-re"   onclick="startQuiz()">🔄 Retry Quiz</button>
+    <button class="btn-home" onclick="goHome()">🏠 Home</button>
+    <div class="review-section" id="reviewDiv"></div>
+  </div>
+</div>
+
+<script>
+const LETTERS = ['A','B','C','D'];
+let currentCat = 'all';
+let activeQs = [];
+let answered = 0;
+let correct = 0;
+let wrong = 0;
+
+// ═══════════════════════════════════════════════
+//  MCQ QUESTIONS
+// ═══════════════════════════════════════════════
+const MCQ = [
+  {n:1, cat:'mcq', topic:'Research Questions',
+   q:"As regard criteria of research questions include which of the following?",
+   opts:["Non specific.", "Not reasonable.", "Questions should fulfill criteria of PICO and FINER criteria.", "Difficult to answer"],
+   c:2,
+   exp:"Research questions should fulfill criteria of PICO and FINER criteria. They must be specific, reasonable, and answerable."},
+
+  {n:2, cat:'mcq', topic:'Sampling',
+   q:"Which of the following is the definition of sample?",
+   opts:["Result of research", "Selected number of individual cases or selected subjects drawn from larger population.", "Outcome of research", "Analyze the messages in random manner."],
+   c:1,
+   exp:"A sample is a selected number of individual cases or research subjects drawn from a larger population for a specific study."},
+
+  {n:3, cat:'mcq', topic:'Types of Research',
+   q:"……. research carried out to discover something for the sake of knowledge and improve understanding of world?",
+   opts:["Basic research", "Applied research", "The conclusion of it is statistically weaker than single study", "Of no importance"],
+   c:0,
+   exp:"Basic research is carried out to discover something simply for the sake of knowledge and to improve our understanding of the world."},
+
+  {n:4, cat:'mcq', topic:'Study Designs',
+   q:"………. is defined as the study which collects data from the same population at different points of time.",
+   opts:["Cross sectional study", "Quantitative study", "Longitudinal study", "Data collection"],
+   c:2,
+   exp:"Longitudinal study collects data from the same population at different points of time (also called cohort study)."},
+
+  {n:5, cat:'mcq', topic:'Statistics',
+   q:"Which of the following is correct for the median?",
+   opts:["Average of set value", "The half of set values.", "The summation of set values", "The quarter of set values"],
+   c:1,
+   exp:"The median is the middle value of a set of values when arranged in order — it is the half (midpoint) of the set values."},
+
+  {n:6, cat:'mcq', topic:'Research Methods',
+   q:"Which of the following is correct for methods of research?",
+   opts:["Data collection", "Data analysis", "Studies", "Different data collection and analysis techniques and practices followed in research"],
+   c:3,
+   exp:"Research methods are the different data collection and analysis techniques and practices followed in research."},
+
+  {n:7, cat:'mcq', topic:'References',
+   q:"Which of the following is correct for references?",
+   opts:["List of studies", "List of all sources of information used in writing up the research", "List of survey", "List of samples"],
+   c:1,
+   exp:"References are a list of all sources of information used in writing up the research, within the body of the publication."},
+
+  {n:8, cat:'mcq', topic:'Sampling',
+   q:"Which of the following is correct for representative samples?",
+   opts:["Samples which include cases or individuals from all subgroups of the targeted population", "Samples which include cases from the same subgroups", "Not generalizable to the population", "Equal non representative sample"],
+   c:0,
+   exp:"Representative samples include cases or individuals from all subgroups of the targeted population, making results generalizable."},
+
+  {n:9, cat:'mcq', topic:'Data Collection',
+   q:"Which of the following is the characteristic of qualitative data collection?",
+   opts:["Numerical data", "Can be counted", "Non numerical", "Close ended questions"],
+   c:2,
+   exp:"Qualitative data is non-numerical — it answers questions of 'how' and 'why', using open-ended questions and observations."},
+
+  {n:10, cat:'mcq', topic:'Data Collection',
+   q:"….. is data which is numerical and can be counted?",
+   opts:["Qualitative data collection", "Cohort study", "Survey", "Quantitative data collection"],
+   c:3,
+   exp:"Quantitative data is numerical and can be counted or measured. It answers questions of 'how many' and 'how much'."},
+
+  {n:11, cat:'mcq', topic:'Sampling',
+   q:"…… is a selected number of individual cases or research subjects drawn from larger population for a specific study?",
+   opts:["Cross sectional study", "SPSS", "Sample", "Analysis"],
+   c:2,
+   exp:"A sample is a selected number of individual cases or research subjects drawn from a larger population for a specific study."},
+
+  {n:12, cat:'mcq', topic:'Statistics',
+   q:"….. is the statistical package for the social sciences and computer software commonly used?",
+   opts:["SPSS", "PDF", "PPT", "Word 2013"],
+   c:0,
+   exp:"SPSS (Statistical Package for the Social Sciences) is a computer software commonly used for quantitative data analysis."},
+
+  {n:13, cat:'mcq', topic:'Study Designs',
+   q:"…….. defined as well defined group of individuals who share common characteristic or experience.",
+   opts:["Cohort study", "Cross sectional study", "Descriptive study", "Analytical study"],
+   c:0,
+   exp:"A cohort is a well-defined group of individuals who share a common characteristic or experience (e.g., born in the same year, same exposure)."},
+
+  {n:14, cat:'mcq', topic:'Study Designs',
+   q:"Quantitative study design measures which of the following?",
+   opts:["Believes", "Attitudes", "Magnitude of the problem and number.", "Situation"],
+   c:2,
+   exp:"Quantitative study design measures the magnitude of the problem and numbers — it answers 'how many' and 'how much'."},
+
+  {n:15, cat:'mcq', topic:'Study Designs',
+   q:"When do we conduct a cross sectional study?",
+   opts:["To estimate the prevalence of health condition.", "To estimate the behavior and risk factor of disease.", "To learn about the characteristic of attitude of individuals.", "All of the above"],
+   c:3,
+   exp:"A cross sectional study is conducted to estimate the prevalence of a health condition, behavior and risk factors, and characteristics/attitudes of individuals. All of the above are correct."},
+
+  {n:16, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following is measured by cross sectional study?",
+   opts:["Average of population", "Number of existing cases / size of population (or no. of population)", "The median of population", "SPSS"],
+   c:1,
+   exp:"Cross sectional study measures prevalence = Number of existing cases / size of population. It is a 'snapshot' in time."},
+
+  {n:17, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following belongs to case report?",
+   opts:["Based on one patient", "Based on collection of different cases", "Similar to cross sectional study", "Similar to descriptive study"],
+   c:0,
+   exp:"A case report is based on ONE patient — it describes a single clinical observation or unusual case."},
+
+  {n:18, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following is correct for case control study?",
+   opts:["Focus on the present exposure", "Analytical epidemiologic study design to focus on past exposure", "Focus on past and present exposure", "Intermediate methods"],
+   c:1,
+   exp:"Case control study is an analytical epidemiologic study design that focuses on PAST exposure — it looks backward (retrospective)."},
+
+  {n:19, cat:'mcq', topic:'Study Designs',
+   q:"Relative Risk (RR) in cohort study includes which of the following?",
+   opts:["Incidence of disease among exposed / incidence of disease among non-exposed", "Average of the disease", "The median of disease among population", "Incidence of disease among exposed only"],
+   c:0,
+   exp:"Relative Risk (RR) = Incidence of disease among exposed / Incidence of disease among non-exposed. Used in cohort studies."},
+
+  {n:20, cat:'mcq', topic:'Study Designs',
+   q:"When we conduct case control study?",
+   opts:["When single exposure lead to multiple outcomes", "Common disease", "To study rare disease, when multiple exposure may lead to single outcome", "When there are cases only no controls"],
+   c:2,
+   exp:"Case control study is conducted to study RARE disease, when multiple exposures may lead to a single outcome. It looks backward at past exposures."},
+
+  {n:21, cat:'mcq', topic:'Study Designs',
+   q:"Analysis of data collected by someone else is the definition of which of the following?",
+   opts:["Primary study", "Secondary study", "Analytic study", "Cohort study"],
+   c:1,
+   exp:"Secondary study is the analysis of data collected by someone else (e.g., systematic review, meta-analysis)."},
+
+  {n:22, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following is correct for case control study?",
+   opts:["Compare between cases only", "Compare between controls", "Do not compare between cases and controls", "Compare between those having the disease (case) and those who do not have the disease (controls)"],
+   c:3,
+   exp:"Case control study compares those HAVING the disease (cases) with those who do NOT have the disease (controls) to identify past exposures."},
+
+  {n:23, cat:'mcq', topic:'Data Collection',
+   q:"As regards in-depth interview which is correct?",
+   opts:["Has outline of topics to serve as a guide for information needed.", "Called structured interview", "Called focus group discussion.", "Has no importance."],
+   c:0,
+   exp:"In-depth interview has an outline of topics to serve as a guide for the information needed. It is a qualitative method (semi-structured/unstructured)."},
+
+  {n:24, cat:'mcq', topic:'Data Collection',
+   q:"Characteristics of self-administered questionnaire of data collection include which of the following?",
+   opts:["Always pretest questionnaire", "Start with easier questions", "Be specific about the purpose of pretest", "All of the above"],
+   c:3,
+   exp:"Characteristics of self-administered questionnaire: always pretest it, start with easier questions, be specific about the purpose of pretest. All of the above are correct."},
+
+  {n:25, cat:'mcq', topic:'Data Collection',
+   q:"As regard techniques of data collection which of the following is correct?",
+   opts:["Using sheet", "Using agendas", "Using records", "Using available data"],
+   c:3,
+   exp:"Techniques of data collection include using available data (secondary data sources, records, existing databases)."},
+
+  {n:26, cat:'mcq', topic:'Data Collection',
+   q:"Which of the following are disadvantages of interview study?",
+   opts:["Need short times", "Not expensive", "Take long time and expensive", "Easy"],
+   c:2,
+   exp:"Disadvantages of interview studies: they take long time and are expensive — they require trained interviewers and significant resources."},
+
+  {n:27, cat:'mcq', topic:'Research Purpose',
+   q:"All of the following are specific purposes of nursing research EXCEPT?",
+   opts:["Design problem", "Prediction", "Controls", "Answer question and solve problems"],
+   c:0,
+   exp:"'Design problem' is NOT a specific purpose of nursing research. Specific purposes include: identification, description, explanation, prediction, and control."},
+
+  {n:28, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following are classifications of studies design?",
+   opts:["Primary and secondary studies", "Old and new studies", "Experimental and non-experimental", "Analytical and non-analytical"],
+   c:0,
+   exp:"Classifications of study designs include primary and secondary studies (as well as observational and experimental)."},
+
+  {n:29, cat:'mcq', topic:'Study Designs',
+   q:"As regard the case series which is correct?",
+   opts:["Depend on one patient", "Depend on collection of different case reports and depend on more than one patients", "Equal case report", "Equal cross sectional study"],
+   c:1,
+   exp:"Case series depends on a collection of different case reports — it involves more than one patient with similar findings."},
+
+  {n:30, cat:'mcq', topic:'Study Designs',
+   q:"…. Is the study when the investigator is no longer observing the subjects but is actually carrying out an experiment on them?",
+   opts:["Observational study", "Cohort study", "Experimental study", "Cross sectional study"],
+   c:2,
+   exp:"Experimental study is when the investigator is no longer only observing but is actually carrying out an experiment (intervention) on subjects."},
+
+  {n:31, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following is correct for selection of cases in clinical trials?",
+   opts:["Selection according to gender only", "Selection according to age", "Selection according to disease status", "Inclusion criteria and exclusion criteria"],
+   c:3,
+   exp:"Selection of cases in clinical trials is based on inclusion criteria and exclusion criteria — clear eligibility rules for who can participate."},
+
+  {n:32, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following is considered an advantage of randomized clinical trials?",
+   opts:["Impossible to be evaluated in Egypt", "Has not effect on health", "Provide weak effect on health", "Provide strong evidence of effect of intervention on health status"],
+   c:3,
+   exp:"Randomized clinical trials provide STRONG evidence of the effect of intervention on health status — they are the gold standard for evidence."},
+
+  {n:33, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following is correct for cohort study?",
+   opts:["Individuals born in the same year", "Individuals have the same disease", "Individuals have the same inclusion criteria", "All of the above"],
+   c:3,
+   exp:"A cohort may be defined as individuals born in the same year, having the same disease, or having the same inclusion criteria. All of the above can define a cohort."},
+
+  {n:34, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following is correct for cohort study?",
+   opts:["Prospective and retrospective study", "Cross sectional study", "Difficult study to perform", "Not suitable in Master degree"],
+   c:0,
+   exp:"Cohort study can be prospective (forward-looking) or retrospective (backward-looking). It is a longitudinal study."},
+
+  {n:35, cat:'mcq', topic:'Measurement',
+   q:"Which of the following is correct for validity?",
+   opts:["Cannot measure what is supposed to measure", "A vague measure", "A weak measure", "A valid measurement is one which measures what is supposed to measure."],
+   c:3,
+   exp:"Validity = A valid measurement is one which measures exactly what it is supposed to measure. It assesses accuracy."},
+
+  {n:36, cat:'mcq', topic:'Sampling',
+   q:"….. is the percentage of the sample that returned the completed surveys?",
+   opts:["References", "Response rate", "Randomization", "Risk factor"],
+   c:1,
+   exp:"Response rate is the percentage of the sample that returned the completed surveys — it reflects participation level."},
+
+  {n:37, cat:'mcq', topic:'Sampling',
+   q:"….. is a sample made up of readily available subjects used in a research study.",
+   opts:["Methods", "Study", "Convenience sample", "Average"],
+   c:2,
+   exp:"Convenience sample (non-random) is made up of readily available subjects — easy to obtain but may not be representative."},
+
+  {n:38, cat:'mcq', topic:'Sampling',
+   q:"Which of the following is correct for sampling frame?",
+   opts:["A complete list of all members of the target population", "Some populations", "Equal reference list", "Snow ball sample"],
+   c:0,
+   exp:"Sampling frame is a complete list of all members of the target population from which the sample is drawn."},
+
+  {n:39, cat:'mcq', topic:'Sampling',
+   q:"Which of the following are the main types of sampling methods?",
+   opts:["Random sample and non-random sample", "Not classified to sub groups", "Cannot be identified.", "Non named groups"],
+   c:0,
+   exp:"The two main types of sampling methods are: 1) Random (probability) sampling, and 2) Non-random (non-probability) sampling."},
+
+  {n:40, cat:'mcq', topic:'Statistics',
+   q:"Which of the following is correct for mean?",
+   opts:["The average of set values", "The half of set values.", "The summation of set values", "The quarter of set values"],
+   c:0,
+   exp:"Mean = the average of set values. It is calculated by summing all values and dividing by the number of values."},
+
+  {n:41, cat:'mcq', topic:'Study Designs',
+   q:"…… is to study rare disease when multiple exposure may lead to single outcome?",
+   opts:["Case series", "Cohort study", "Case control study", "Cross sectional study"],
+   c:2,
+   exp:"Case control study is used to study rare disease when multiple exposures may lead to a single outcome — it works backward from outcome to exposure."},
+
+  {n:42, cat:'mcq', topic:'Sampling',
+   q:"As regard the type of samples, which of the following is correct?",
+   opts:["Representative samples only.", "Non representative samples only", "Representative samples and non representative samples", "Cannot be classified"],
+   c:2,
+   exp:"Samples are classified into: Representative samples (generalizable) and Non-representative samples (not generalizable)."},
+
+  {n:43, cat:'mcq', topic:'Study Designs',
+   q:"As regard longitudinal study which of the following is correct?",
+   opts:["Cannot be applied.", "Equal cross sectional study.", "Snapshot study.", "Study the specific population at different points of time"],
+   c:3,
+   exp:"Longitudinal study follows the same population at different points of time — unlike cross-sectional (snapshot), it tracks changes over time."},
+
+  {n:44, cat:'mcq', topic:'Data Collection',
+   q:"Which of the following is correct for content analysis?",
+   opts:["Is a quantitative method of research", "Qualitative method of research", "Quantitative method and qualitative", "Analysis of messages in random method."],
+   c:1,
+   exp:"Content analysis is a qualitative method of research — it systematically analyzes text, images, or messages to identify patterns and themes."},
+
+  {n:45, cat:'mcq', topic:'Data Collection',
+   q:"Which of the following is considered correct for quantitative data collection?",
+   opts:["Numerical data collection.", "Cannot be counted.", "Answers of open ended question.", "Non numerical data collection"],
+   c:0,
+   exp:"Quantitative data collection is numerical data collection — it can be counted and measured (e.g., age, weight, number of patients)."},
+
+  {n:46, cat:'mcq', topic:'References',
+   q:"………….. is the list of sources of information.",
+   opts:["Operative list.", "Reference list", "Waiting list", "Search list"],
+   c:1,
+   exp:"Reference list is the list of all sources of information used in the research — it documents all cited works."},
+
+  {n:47, cat:'mcq', topic:'Study Designs',
+   q:"Which is correct for snap shot study?",
+   opts:["Cross sectional study", "Longitudinal study", "Cohort study", "Appropriate for rare cases."],
+   c:0,
+   exp:"Cross sectional study is also called 'snap shot study' — it measures data at a single point in time."},
+
+  {n:48, cat:'mcq', topic:'Data Collection',
+   q:"Which of the following is correct for in-depth interviews?",
+   opts:["Method of quantitative data collection", "Method of qualitative data collection", "Non qualitative method of data collection.", "Non quantitative data collection"],
+   c:1,
+   exp:"In-depth interview is a method of QUALITATIVE data collection — used to explore complex issues that cannot be directly observed or measured."},
+
+  {n:49, cat:'mcq', topic:'Sampling',
+   q:"Which of the following is correct for Response rate?",
+   opts:["Number of response.", "Percentage of the sample that returned the completed surveys.", "Number of outcomes", "Number of results."],
+   c:1,
+   exp:"Response rate = Percentage of the sample that returned the completed surveys. A higher response rate means less bias."},
+
+  {n:50, cat:'mcq', topic:'Study Designs',
+   q:"Quantitative study design measures which of the following?",
+   opts:["Believes.", "Attitude.", "Outcomes of research.", "Magnitude of the problem."],
+   c:3,
+   exp:"Quantitative study design measures the MAGNITUDE of the problem (numbers, frequency, how many) — not beliefs or attitudes (those are qualitative)."},
+
+  {n:51, cat:'mcq', topic:'Study Designs',
+   q:"When conduct a cross sectional study?",
+   opts:["To estimate the prevalence of health condition.", "To estimate the behavior and risk factor of the disease.", "To learn about the characteristic of attitude of individuals", "All of the above"],
+   c:3,
+   exp:"Cross sectional study is conducted for all of the above: prevalence estimation, behavior and risk factors, and characteristics/attitudes."},
+
+  {n:52, cat:'mcq', topic:'Study Designs',
+   q:"As regard longitudinal study which of the following is correct?",
+   opts:["Cannot be applied.", "Equal cross sectional study.", "Snapshot study.", "Cohort study"],
+   c:3,
+   exp:"Longitudinal study is equal to cohort study — both follow the same group over time at different points."},
+
+  {n:53, cat:'mcq', topic:'Statistics',
+   q:"Which is correct for the median?",
+   opts:["The average.", "The mean", "Is the middle of a set of values?", "All of the above"],
+   c:2,
+   exp:"The median is the middle value of a set of values arranged in order. It is different from the mean (average)."},
+
+  {n:54, cat:'mcq', topic:'Study Designs',
+   q:"Which is correct for snap shot study?",
+   opts:["Cross sectional study", "Longitudinal study.", "Cohort study", "Data analysis"],
+   c:0,
+   exp:"Snap shot study = Cross sectional study. It collects data from a population at ONE point in time."},
+
+  {n:55, cat:'mcq', topic:'Types of Research',
+   q:"…. research carried out to discover something for the sake of knowledge and improve understanding of world?",
+   opts:["Basic research", "Applied research", "The conclusion of it is statistically weaker than single study", "Of no importance"],
+   c:0,
+   exp:"Basic research is carried out to discover something for the sake of knowledge to improve understanding of the world (not for immediate practical application)."},
+
+  {n:56, cat:'mcq', topic:'Study Designs',
+   q:"………. is defined as the study which collects data from the same population at different points of time.",
+   opts:["Primary study", "Cohort study", "Qualitative study", "Secondary study"],
+   c:1,
+   exp:"Cohort (longitudinal) study collects data from the same population at different points of time — it tracks changes over time."},
+
+  {n:57, cat:'mcq', topic:'Statistics',
+   q:"Which of the following is correct for the median?",
+   opts:["The average of set values", "The half of set values.", "The summation of set values", "The quarter of set values"],
+   c:1,
+   exp:"The median = the half (middle value) of a set of values. Half the values are above it and half are below it."},
+
+  {n:58, cat:'mcq', topic:'Sampling',
+   q:"Which is correct for non-representative sample?",
+   opts:["Not include cases of all subgroups.", "Not include individual of all subgroups", "Results are not generalizable", "All the above"],
+   c:3,
+   exp:"Non-representative sample: does not include cases from all subgroups AND results are not generalizable to the population. All of the above are correct."},
+
+  {n:59, cat:'mcq', topic:'Sampling',
+   q:"Which of the following is correct for random sampling?",
+   opts:["Specific population", "Each subject in the population has an equal chance of being selected for the study.", "Each subject in population has unequal chance of being selected.", "List of samples"],
+   c:1,
+   exp:"Random sampling: each subject in the population has an EQUAL chance of being selected — this is the definition of probability sampling."},
+
+  {n:60, cat:'mcq', topic:'Sampling',
+   q:"Which of the following is correct for representative samples?",
+   opts:["Samples which include cases or individuals from all subgroups of the targeted population", "Samples which include cases from the same subgroups", "Not generalizable to the population", "Equal non representative sample"],
+   c:0,
+   exp:"Representative samples include cases or individuals from ALL subgroups of the targeted population, making findings generalizable."},
+
+  {n:61, cat:'mcq', topic:'Measurement',
+   q:"Which of the following is the definition of reliability?",
+   opts:["Numerical data", "Nearly equal result", "Measure is one which when repeated gives a similar result on each occasion", "Non similar result"],
+   c:2,
+   exp:"Reliability = A measure that when repeated gives a SIMILAR result on each occasion. It assesses consistency/reproducibility."},
+
+  {n:62, cat:'mcq', topic:'Statistics',
+   q:"SPSS is...?",
+   opts:["Qualitative data collection", "Quantitative data analysis", "Answer question with how.", "Quantitative and qualitative data collection"],
+   c:1,
+   exp:"SPSS is used for QUANTITATIVE data analysis — it is statistical software that processes and analyzes numerical data."},
+
+  {n:63, cat:'mcq', topic:'Study Designs',
+   q:"…… is a selected number of individual cases or research subjects drawn from larger population for a specific study?",
+   opts:["Cross sectional study", "SPSS", "Sample", "Analysis"],
+   c:2,
+   exp:"A sample is a selected number of individual cases or research subjects drawn from a larger population."},
+
+  {n:64, cat:'mcq', topic:'Statistics',
+   q:"….. is the statistical package for the social sciences and computer software commonly used?",
+   opts:["SPSS", "PDF", "PPT", "Word 2013"],
+   c:0,
+   exp:"SPSS = Statistical Package for the Social Sciences — a widely used computer software for statistical analysis."},
+
+  {n:65, cat:'mcq', topic:'Study Designs',
+   q:"…….. defined as well defined group of individuals who share common characteristic or experience.",
+   opts:["Cohort study", "Cross sectional study", "Descriptive study", "Analytical study"],
+   c:0,
+   exp:"Cohort = a well-defined group of individuals who share common characteristics or experience (e.g., same year of birth, same exposure)."},
+
+  {n:66, cat:'mcq', topic:'Study Designs',
+   q:"Quantitative study design measures which of the following?",
+   opts:["Believes", "Attitudes", "Risk of the problems.", "Situation"],
+   c:2,
+   exp:"Quantitative study design measures the risk and magnitude of problems — it quantifies numerical outcomes."},
+
+  {n:67, cat:'mcq', topic:'Study Designs',
+   q:"When conduct a cross sectional study?",
+   opts:["To estimate the prevalence of health condition.", "To estimate the behavior and risk factor of diseases.", "1+2.", "To diagnose common diseases"],
+   c:2,
+   exp:"Cross sectional study is conducted to estimate prevalence (1) AND to estimate behavior and risk factors (2). Answer = 1+2."},
+
+  {n:68, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following equals number of existing cases / size of population?",
+   opts:["Cohort study", "Cross sectional study", "Primary study", "Secondary study."],
+   c:1,
+   exp:"Cross sectional study measures PREVALENCE = Number of existing cases / size of population. It is the 'snapshot' measure."},
+
+  {n:69, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following belongs to case series?",
+   opts:["Based on one patient", "Based on more than one patient", "Similar to cross sectional study", "Similar to descriptive study"],
+   c:1,
+   exp:"Case series is based on MORE than one patient — it is a collection of case reports describing similar findings in multiple patients."},
+
+  {n:70, cat:'mcq', topic:'Study Designs',
+   q:"Analytical epidemiological study design to focus on past exposure refers to…",
+   opts:["Case control study", "Case series", "Case report", "Cross sectional study"],
+   c:0,
+   exp:"Case control study is the analytical epidemiological study design that focuses on PAST exposure — it is retrospective."},
+
+  {n:71, cat:'mcq', topic:'Study Designs',
+   q:"Incidence of disease among exposed / incidence of disease among non-exposed refers to…",
+   opts:["Relative Risk", "Reliability rate", "Probability rate", "Median"],
+   c:0,
+   exp:"Relative Risk (RR) = Incidence among exposed / Incidence among non-exposed. Used in cohort studies to measure association."},
+
+  {n:72, cat:'mcq', topic:'Study Designs',
+   q:"When we conduct case control study?",
+   opts:["Study rare disease", "Common disease", "When multiple exposure may lead to single outcome", "1+3"],
+   c:3,
+   exp:"Case control study is conducted to study RARE disease (1) AND when multiple exposures may lead to a single outcome (3). Answer = 1+3."},
+
+  {n:73, cat:'mcq', topic:'Study Designs',
+   q:"Secondary study is…",
+   opts:["Analysis of data collected by someone else", "Equal primary study", "Equal experimental study", "Equal observational study"],
+   c:0,
+   exp:"Secondary study = Analysis of data collected by someone else (e.g., systematic reviews, meta-analyses use existing published data)."},
+
+  {n:74, cat:'mcq', topic:'Study Designs',
+   q:"Study which compares between those having the disease (cases) and those who do not have the disease (control) refers to which of the following?",
+   opts:["Case control", "Case report", "Case series", "Cohort study"],
+   c:0,
+   exp:"Case control study compares CASES (with disease) vs CONTROLS (without disease) looking backward at past exposures."},
+
+  {n:75, cat:'mcq', topic:'Research Questions',
+   q:"Research question should be:",
+   opts:["Reasonable", "Specific enough to be answerable", "Question should fulfill PICO and FINER criteria", "All the above"],
+   c:3,
+   exp:"Research questions should be: Reasonable, Specific enough to be answerable, AND fulfill PICO and FINER criteria. All of the above."},
+
+  {n:76, cat:'mcq', topic:'Research Purpose',
+   q:"Which is correct for general purpose of research?",
+   opts:["Solve problems", "Make problems.", "Design problem", "Magnify problems"],
+   c:0,
+   exp:"The general purpose of research is to solve problems and answer questions — it aims to expand knowledge and improve practice."},
+
+  {n:77, cat:'mcq', topic:'Research Purpose',
+   q:"Which is correct for specific purposes of research?",
+   opts:["Identification", "Description", "Explanation and control", "All of the above"],
+   c:3,
+   exp:"Specific purposes of research include: Identification, Description, Explanation, Prediction, and Control. All of the above are correct."},
+
+  {n:78, cat:'mcq', topic:'Research Questions',
+   q:"As regard FINER criteria which is correct?",
+   opts:["Question should be Novel, Ethical, Relevant", "Question should be non-ethical.", "Question should be difficult.", "Cannot be answerable"],
+   c:0,
+   exp:"FINER = Feasible, Interesting, Novel, Ethical, Relevant. The question should be Novel, Ethical, and Relevant (among other criteria)."},
+
+  {n:79, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following are correct for cross sectional study?",
+   opts:["Design is non-comparison groups", "Design is comparison groups", "Population are all members of small groups", "1+3"],
+   c:0,
+   exp:"Cross sectional study has NON-comparison groups design — it describes the population at one point without comparing groups over time."},
+
+  {n:80, cat:'mcq', topic:'Research Purpose',
+   q:"All of the following are specific purposes of nursing research EXCEPT?",
+   opts:["Design problem", "Prediction", "Controls", "Answer question and solve problems"],
+   c:0,
+   exp:"'Design problem' is NOT a specific purpose of nursing research. The specific purposes are: identification, description, explanation, prediction, and control."},
+
+  {n:81, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following are classifications of research study?",
+   opts:["Cohort study", "Case control study", "Cross sectional study", "All the above"],
+   c:3,
+   exp:"All of the above (cohort, case control, cross sectional) are types of research study designs — all are classifications of observational studies."},
+
+  {n:82, cat:'mcq', topic:'Study Designs',
+   q:"As regard the case series which is correct?",
+   opts:["Depend on one patient", "Depend on collection of different case reports and depend on more than one patients", "Equal case report", "Equal cross sectional study"],
+   c:1,
+   exp:"Case series depends on a COLLECTION of different case reports involving more than one patient — unlike a case report (single patient)."},
+
+  {n:83, cat:'mcq', topic:'Study Designs',
+   q:"Experimental study is…",
+   opts:["The study when the investigator is no longer observing but actually carrying out an experiment on them", "Cross sectional study", "Cohort case control study", "Case report"],
+   c:0,
+   exp:"Experimental study = the investigator is no longer observing but ACTIVELY carrying out an experiment (intervention) on subjects."},
+
+  {n:84, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following is correct for selection of cases in clinical trials?",
+   opts:["Selection according to gender only", "Selection according to age", "Selection according to disease status", "Inclusion criteria and exclusion criteria"],
+   c:3,
+   exp:"Selection in clinical trials is based on INCLUSION criteria (who can join) and EXCLUSION criteria (who cannot join)."},
+
+  {n:85, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following is considered an advantage of randomized clinical trials?",
+   opts:["Has not effect on health", "Experimental study", "Provide strong evidence of effect of intervention on health status", "2+3"],
+   c:3,
+   exp:"Randomized clinical trials provide strong evidence AND are the type of experimental study (2+3). They are the gold standard for intervention research."},
+
+  {n:86, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following is correct for cohort study?",
+   opts:["Individuals born in the same year", "Individuals have the same disease", "Individuals have the same inclusion criteria", "All of the above"],
+   c:3,
+   exp:"A cohort can be defined by: same birth year, same disease, or same inclusion criteria. All of the above define a cohort."},
+
+  {n:87, cat:'mcq', topic:'Study Designs',
+   q:"Which of the following is correct for cohort study?",
+   opts:["Appropriate for individual born in the same year, having the same disease.", "Cross sectional study", "Difficult study to perform", "Not suitable in Master degree"],
+   c:0,
+   exp:"Cohort study is appropriate for individuals born in the same year or having the same disease — it follows them over time."},
+
+  {n:88, cat:'mcq', topic:'Sampling',
+   q:"….. is the percentage of the sample that returned the completed surveys?",
+   opts:["References", "Response rate", "Randomization", "Risk factor"],
+   c:1,
+   exp:"Response rate = percentage of the sample that returned completed surveys. High response rate reduces non-response bias."},
+
+  {n:89, cat:'mcq', topic:'Sampling',
+   q:"….. is a sample made up of readily available subjects used in a research study.",
+   opts:["Representative sample", "Non representative sample", "Convenience sample", "Random sample"],
+   c:2,
+   exp:"Convenience sample = made up of readily available subjects. It is easy but may not represent the population well."},
+
+  {n:90, cat:'mcq', topic:'Sampling',
+   q:"Which of the following is correct for sampling frame?",
+   opts:["A complete list of all members of the target population", "Random selection", "Equal reference list", "Non random selection"],
+   c:0,
+   exp:"Sampling frame = a complete list of ALL members of the target population from which the sample will be drawn."},
+
+  {n:91, cat:'mcq', topic:'Sampling',
+   q:"Which of the following are the main types of sampling methods?",
+   opts:["Random sample", "Non random sample", "Not classified to sub groups", "1+2"],
+   c:3,
+   exp:"The two main sampling methods are: 1) Random (probability) sample AND 2) Non-random (non-probability) sample. Answer = 1+2."},
+
+  {n:92, cat:'mcq', topic:'Statistics',
+   q:"Which of the following is correct for mean?",
+   opts:["The average of set values", "The half of set values.", "The summation of set values", "The quarter of set values"],
+   c:0,
+   exp:"Mean = the average of set values = sum of all values / number of values."},
+
+  {n:93, cat:'mcq', topic:'Study Designs',
+   q:"…… is to study rare disease when multiple exposure may lead to single outcome?",
+   opts:["Case series", "Cohort study", "Case report", "Cross sectional study"],
+   c:0,
+   exp:"Case series is used for rare diseases when multiple exposures may lead to a single outcome — it describes a group of similar cases."},
+
+  {n:94, cat:'mcq', topic:'Study Designs',
+   q:"As regard longitudinal study which of the following is correct?",
+   opts:["Cannot be applied.", "Equal cross sectional study.", "Snapshot study.", "Equal cohort study"],
+   c:3,
+   exp:"Longitudinal study = Cohort study. Both follow the same population at different points in time. They are equivalent terms."},
+
+  {n:95, cat:'mcq', topic:'References',
+   q:"………….. is the list of sources of information.",
+   opts:["Operative list.", "Reference list", "Waiting list", "Search list"],
+   c:1,
+   exp:"Reference list = the list of all sources of information used in the research."},
+
+  {n:96, cat:'mcq', topic:'Study Designs',
+   q:"Which is correct for snap shot study?",
+   opts:["Cross sectional study", "Longitudinal study", "Case report", "Case series."],
+   c:0,
+   exp:"Cross sectional study = Snap shot study. It collects data at ONE point in time — a 'snapshot' of the population."},
+
+  {n:97, cat:'mcq', topic:'Study Designs',
+   q:"When conduct a cross sectional study?",
+   opts:["To estimate the prevalence of health condition.", "To estimate the behavior and risk factor of the disease.", "To learn about the characteristic of attitude of individuals", "All of the above"],
+   c:3,
+   exp:"Cross sectional study is used for: prevalence estimation, behavior/risk factors, AND characteristics/attitudes. All of the above."},
+
+  {n:98, cat:'mcq', topic:'Study Designs',
+   q:"As regard longitudinal study which of the following is correct?",
+   opts:["Cannot be applied.", "Equal cross sectional study.", "Snapshot study.", "Cohort study"],
+   c:3,
+   exp:"Longitudinal study = Cohort study. They follow the same group over time at multiple time points."},
+
+  {n:99, cat:'mcq', topic:'Statistics',
+   q:"Which is correct for the median?",
+   opts:["The average.", "The mean", "1+2", "Quarter of the value"],
+   c:2,
+   exp:"The median is neither the average nor the mean in a strict sense — however when options say 1+2 here it means the middle value = both average and mean options are not fully correct, the median is the midpoint."},
+
+  {n:100, cat:'mcq', topic:'Types of Research',
+   q:"… research carried out for practical applications and problem solving function.",
+   opts:["Applied research", "Daily research.", "Interview.", "Basic research"],
+   c:0,
+   exp:"Applied research is carried out for PRACTICAL applications and problem-solving functions — it addresses real-world problems."},
+];
+
+// ═══════════════════════════════════════════════
+//  TRUE / FALSE QUESTIONS
+// ═══════════════════════════════════════════════
+const TF = [
+  {n:1, cat:'tf', topic:'Study Designs',
+   q:"Systematic review is qualitative evidence synthesis.",
+   opts:["True","False"], c:0, isTF:true,
+   exp:"TRUE. Systematic review is a qualitative evidence synthesis — it systematically gathers and synthesizes evidence from multiple studies."},
+
+  {n:2, cat:'tf', topic:'Study Designs',
+   q:"Disadvantages of intervention study are expensive, take long time and may be complex.",
+   opts:["True","False"], c:0, isTF:true,
+   exp:"TRUE. Intervention (experimental) studies are expensive, time-consuming, and may be ethically and logistically complex."},
+
+  {n:3, cat:'tf', topic:'Study Designs',
+   q:"Cohort study is considered as a longitudinal study.",
+   opts:["True","False"], c:0, isTF:true,
+   exp:"TRUE. Cohort study is a longitudinal study — it follows the same group of people over time at different points."},
+
+  {n:4, cat:'tf', topic:'Data Collection',
+   q:"In depth interview is a method of qualitative data collection used when cannot be directly observed or measured the phenomenon under study.",
+   opts:["True","False"], c:0, isTF:true,
+   exp:"TRUE. In-depth interview is used for qualitative data collection — especially when the phenomenon cannot be directly observed or measured (e.g., feelings, experiences)."},
+
+  {n:5, cat:'tf', topic:'Types of Research',
+   q:"Applied research carried out to discover something simply for the sake of knowledge to improve our understanding of the world.",
+   opts:["True","False"], c:1, isTF:true,
+   exp:"FALSE. This is the definition of BASIC research, not applied research. Applied research is for practical applications and problem-solving."},
+
+  {n:6, cat:'tf', topic:'Sampling',
+   q:"As regard random sample, subjects are selected according to the probability laws.",
+   opts:["True","False"], c:0, isTF:true,
+   exp:"TRUE. In random (probability) sampling, subjects are selected according to probability laws — each subject has an equal chance of being selected."},
+
+  {n:7, cat:'tf', topic:'Sampling',
+   q:"We do sampling to obtain representative sample of population.",
+   opts:["True","False"], c:0, isTF:true,
+   exp:"TRUE. The purpose of sampling is to obtain a representative sample that reflects the characteristics of the total population."},
+
+  {n:8, cat:'tf', topic:'Sampling',
+   q:"Response rate is the percentage of the sample which returned the complete survey.",
+   opts:["True","False"], c:0, isTF:true,
+   exp:"TRUE. Response rate = the percentage of the sample that returned the completed surveys."},
+
+  {n:9, cat:'tf', topic:'Statistics',
+   q:"SPSS is used in quantitative data collection.",
+   opts:["True","False"], c:1, isTF:true,
+   exp:"FALSE. SPSS is used for quantitative data ANALYSIS (not collection). It is statistical software for analyzing numerical data."},
+
+  {n:10, cat:'tf', topic:'References',
+   q:"References is a list of all sources of information used in writing up the research, within the body of the publications.",
+   opts:["True","False"], c:0, isTF:true,
+   exp:"TRUE. References are a list of all sources of information used in writing up the research."},
+
+  {n:11, cat:'tf', topic:'Study Designs',
+   q:"Cohort study is a cross sectional study.",
+   opts:["True","False"], c:1, isTF:true,
+   exp:"FALSE. Cohort study is a LONGITUDINAL study (follows people over time), while cross sectional study is a snapshot at one point in time. They are different."},
+
+  {n:12, cat:'tf', topic:'Statistics',
+   q:"SPSS is computer software.",
+   opts:["True","False"], c:0, isTF:true,
+   exp:"TRUE. SPSS (Statistical Package for the Social Sciences) is a computer software used for statistical data analysis."},
+
+  {n:13, cat:'tf', topic:'Study Designs',
+   q:"Cross sectional study is snap shot study.",
+   opts:["True","False"], c:0, isTF:true,
+   exp:"TRUE. Cross sectional study = snap shot study. It collects data from a population at a single point in time."},
+
+  {n:14, cat:'tf', topic:'Statistics',
+   q:"Relative risk is not percentage.",
+   opts:["True","False"], c:0, isTF:true,
+   exp:"TRUE. Relative Risk (RR) is a RATIO (not a percentage) — it compares the risk in exposed group to the risk in non-exposed group."},
+
+  {n:15, cat:'tf', topic:'Study Designs',
+   q:"Randomized study is equal to non-randomized study.",
+   opts:["True","False"], c:1, isTF:true,
+   exp:"FALSE. Randomized and non-randomized studies are DIFFERENT. Randomized studies (RCTs) provide stronger evidence and control for bias through random allocation."},
+
+  {n:16, cat:'tf', topic:'Study Designs',
+   q:"Cohort study is cross sectional study.",
+   opts:["True","False"], c:1, isTF:true,
+   exp:"FALSE. Cohort study is longitudinal (follows people over time). Cross sectional study is a snapshot at one time point. They are completely different designs."},
+];
+
+const ALL = [...MCQ, ...TF];
+
+function selectCat(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  let filtered;
+  if (cat === 'all') filtered = ALL;
+  else if (cat === 'mcq') filtered = MCQ;
+  else filtered = TF;
+  document.getElementById('qCount').textContent = filtered.length;
+}
+
+function startQuiz() {
+  if (currentCat === 'all') activeQs = [...ALL];
+  else if (currentCat === 'mcq') activeQs = [...MCQ];
+  else activeQs = [...TF];
+
+  answered = 0; correct = 0; wrong = 0;
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('quizWrapper').style.display = 'block';
+  document.getElementById('stickyBar').style.display = 'block';
+  document.getElementById('resultsBox').style.display = 'none';
+  document.getElementById('submitBtn').disabled = true;
+  renderCards();
+  updateSticky();
+}
+
+function renderCards() {
+  const cont = document.getElementById('cardsContainer');
+  cont.innerHTML = '';
+  activeQs.forEach((q, idx) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'card_' + idx;
+
+    let catClass = q.cat === 'mcq' ? 'mcq' : 'tf';
+    let catLabel = q.cat === 'mcq' ? 'MCQ' : 'True/False';
+
+    let optsHTML = q.opts.map((opt, i) => {
+      let letter = q.isTF ? (i === 0 ? 'T' : 'F') : LETTERS[i];
+      return `<button class="opt" id="opt_${idx}_${i}" onclick="choose(${idx},${i},${q.c})">
+        <span class="opt-letter">${letter}</span>${opt}</button>`;
+    }).join('');
+
+    card.innerHTML = `
+      <div class="q-header">
+        <div class="q-num">${idx + 1}</div>
+        <span class="cat-tag ${catClass}">${catLabel}</span>
+        <span class="cat-tag" style="background:linear-gradient(135deg,#37474f,#263238)">${q.topic || ''}</span>
+      </div>
+      <div class="q-text">${q.q}</div>
+      <div class="opts">${optsHTML}</div>
+      <div class="q-feedback" id="fb_${idx}"></div>
+    `;
+    cont.appendChild(card);
+  });
+}
+
+function choose(idx, chosen, correct_idx) {
+  const opts = activeQs[idx].opts;
+  for (let i = 0; i < opts.length; i++) {
+    const btn = document.getElementById('opt_' + idx + '_' + i);
+    btn.disabled = true;
+    if (i === correct_idx) btn.classList.add('correct');
+    else if (i === chosen) btn.classList.add('wrong');
+  }
+  const fb = document.getElementById('fb_' + idx);
+  const card = document.getElementById('card_' + idx);
+  const q = activeQs[idx];
+  const isRight = chosen === correct_idx;
+
+  if (isRight) { correct++; card.classList.add('answered-correct'); }
+  else { wrong++; card.classList.add('answered-wrong'); }
+
+  answered++;
+  fb.style.display = 'block';
+  fb.className = 'q-feedback ' + (isRight ? 'correct' : 'wrong');
+  fb.innerHTML = `<strong>${isRight ? '✅' : '❌'} ${q.exp || ''}</strong>`;
+
+  updateSticky();
+  if (answered === activeQs.length) document.getElementById('submitBtn').disabled = false;
+}
+
+function updateSticky() {
+  const total = activeQs.length;
+  document.getElementById('sNum').textContent = answered + '/' + total;
+  document.getElementById('sC').textContent = '✅ ' + correct;
+  document.getElementById('sW').textContent = '❌ ' + wrong;
+  document.getElementById('sP').textContent = '📊 ' + (total > 0 ? Math.round((correct/total)*100) : 0) + '%';
+  document.getElementById('sFill').style.width = (total > 0 ? (answered/total)*100 : 0) + '%';
+}
+
+function showResults() {
+  const box = document.getElementById('resultsBox');
+  box.style.display = 'block';
+  box.scrollIntoView({behavior:'smooth'});
+  const total = activeQs.length;
+  const pct = total > 0 ? Math.round((correct/total)*100) : 0;
+  document.getElementById('rScore').textContent = correct;
+  document.getElementById('rTotal').textContent = total;
+  document.getElementById('rC').textContent = correct;
+  document.getElementById('rW').textContent = wrong;
+  document.getElementById('rP').textContent = pct + '%';
+  const msgs = ['🌟 Excellent! Keep it up!','👏 Great job!','💪 Good effort!','📚 Keep studying!','🔄 Practice makes perfect!'];
+  document.getElementById('rMsg').textContent = pct>=90?msgs[0]:pct>=75?msgs[1]:pct>=60?msgs[2]:pct>=40?msgs[3]:msgs[4];
+  const offset = 402 - (402 * pct / 100);
+  document.getElementById('ringFg').style.strokeDashoffset = offset;
+
+  const rev = document.getElementById('reviewDiv');
+  const wrongs = activeQs.filter((q,i) => {
+    const btns = document.querySelectorAll(`[id^="opt_${i}_"]`);
+    return Array.from(btns).some(b => b.classList.contains('wrong'));
+  });
+  if (wrongs.length > 0) {
+    rev.innerHTML = `<h3>❌ Questions to Review (${wrongs.length})</h3>` +
+      wrongs.map(q => `<div class="rev-item wrong">
+        <div class="rt">${q.q}</div>
+        <div style="color:#065f46;font-weight:600;margin-top:4px">✅ ${q.opts[q.c]}</div>
+        <div class="exp">${q.exp || ''}</div>
+      </div>`).join('');
+  } else {
+    rev.innerHTML = '<h3>🎉 Perfect Score! All questions answered correctly!</h3>';
+  }
+}
+
+function goHome() {
+  document.getElementById('startScreen').style.display = 'block';
+  document.getElementById('quizWrapper').style.display = 'none';
+  document.getElementById('stickyBar').style.display = 'none';
+}
+
+document.getElementById('qCount').textContent = ALL.length;
+</script>
+</body>
+</html>
